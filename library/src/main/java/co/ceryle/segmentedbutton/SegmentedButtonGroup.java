@@ -308,7 +308,7 @@ public class SegmentedButtonGroup extends LinearLayout {
 
     private int selectorColor, animateSelector, animateSelectorDuration, position, backgroundColor, dividerColor, radius,
             dividerSize, rippleColor, dividerPadding, dividerRadius, borderSize, borderColor;
-    private boolean clickable, enabled, ripple, hasRippleColor, hasDivider;
+    private boolean clickable, enabled, ripple, hasRippleColor, hasDivider, isMultipleClickButton = false;
 
     private Drawable backgroundDrawable, selectorBackgroundDrawable, dividerBackgroundDrawable;
 
@@ -732,12 +732,19 @@ public class SegmentedButtonGroup extends LinearLayout {
      *
      */
 
+    public void setMultipleClickButton(boolean multipleClickButton) {
+        isMultipleClickButton = multipleClickButton;
+    }
+
     private int toggledPosition = 0;
     private float toggledPositionOffset = 0;
 
     private void toggle(int position, int duration, boolean isToggledByTouch) {
-        if (!draggable && toggledPosition == position)
-            return;
+        if (!isMultipleClickButton) {
+            if (!draggable && toggledPosition == position) {
+                return;
+            }
+        }
 
         toggledPosition = position;
 
